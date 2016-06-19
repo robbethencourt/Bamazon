@@ -169,7 +169,7 @@ function bamazonManager() {
 				} // end if else
 
 			}
-		// pass the id and amount to the purchaseProduct function to update the quantity
+		// pass the id and amount to .then()
 		}]).then(function(answer) {
 
 			// convert the answers to integers
@@ -199,7 +199,7 @@ function bamazonManager() {
 
 	function addNewProduct() {
 		
-		// ask the user which product they would like to update
+		// ask the user what product they would like to add
 		prompt([{
 			name: 'name',
 			type: 'input',
@@ -284,7 +284,7 @@ function bamazonManager() {
 				} // end if else
 
 			}
-		// pass the id and amount to the purchaseProduct function to update the quantity
+		// pass the name, department, price and amount to .then()
 		}]).then(function(answer) {
 
 			// convert the answers that require integers to integers

@@ -63,7 +63,102 @@ function bamazonExec() {
 
 	function createNewDepartment() {
 		
-		console.log('create new department');
+		// ask the user what department they would like to add
+		prompt([{
+			name: 'name',
+			type: 'input',
+			message: 'What is the name of the new department?',
+			validate: function(value) {
+
+				// check if the user entered anything
+				if (value !== '') {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nIt doesn\'t appear as if you entered anything. Try again.\n');
+					return false;
+
+				} // end if else
+
+			}
+		}, {
+			name: 'overhead_costs',
+			type: 'input',
+			message: 'What are the overhead costs associated with this department?',
+			validate: function(value) {
+
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nWe need a number for the costs of the department.\n');
+					return false;
+
+				} // end if else
+
+			}
+		}, {
+			name: 'total_sales',
+			type: 'input',
+			message: 'What are the total sales for the department?',
+			validate: function(value) {
+
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nWe need a number for the total sales of the department.\n');
+					return false;
+
+				} // end if else
+
+			}
+		// pass the name, overhead costs and total sales to .then()
+		}]).then(function(answer) {
+
+			// convert the answers that require integers to integers
+			var overhead_costs_int = parseFloat(answer.overhead_costs);
+			var total_sales_int = parseFloat(answer.total_sales);
+			
+			// store the query string into a variable to pass to connection.query()
+    		var query = 'INSERT INTO Departments SET ?';
+
+    		// store the values into an object to pass to connection.query()
+    		var values = {
+    			DepartmentName: answer.name,
+    			OverHeadCosts: overhead_costs_int,
+    			TotalSales: total_sales_int
+    		}
+
+    		// update the Departments table with the new department
+    		connection.query(query, values, function(err, data) {
+
+    			// if error, throw error
+				if (err) throw err;
+
+				// display message stating quantity has been updated
+				console.log('\nDepartment has been created\n');
+
+	    		// start the process over and list actions
+	    		listActions();
+
+    		}); // end connection.query()
+		
+		});  // end prompt().then()
 
 	} // end createNewDepartment()
 
