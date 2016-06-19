@@ -104,7 +104,7 @@ function bamazonManager() {
 			// if error, throw error
 			if (err) throw err;
 
-			// welcome screen and display all the items available to buy
+			// welcome screen and display all the items with StockQuantity less than 5
 			console.log('\nItems with quantity less than 5:\n');
 
 			// loop through the list of items and display to the screen
@@ -126,7 +126,74 @@ function bamazonManager() {
 
 	function addToInventory() {
 		
-		console.log('add to inventory');
+		// ask the user which product they would like to update
+		prompt([{
+			name: 'id',
+			type: 'input',
+			message: 'What is the ID of the Product you would like to update?',
+			validate: function(value) {
+
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nAll we need is the number next to the title.\n');
+					return false;
+
+				} // end if else
+
+			}
+		}, {
+			name: 'amount',
+			type: 'input',
+			message: 'How many would you like to add?',
+			validate: function(value) {
+
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nWe need a number for the amount.\n');
+					return false;
+
+				} // end if else
+
+			}
+		// pass the id and amount to the purchaseProduct function to update the quantity
+		}]).then(function(answer) {
+
+			// convert the answers to integers
+			var item_int = parseInt(answer.id);
+			var amount_int = parseInt(answer.amount);
+			
+			// store the query string into a variable to pass to connection.query()
+    		var query = 'UPDATE Products SET StockQuantity = StockQuantity + ? WHERE ItemID = ?';
+
+    		// update the Products table with the new StockQuantity for the purchased item
+    		connection.query(query, [amount_int, item_int], function(err, data) {
+
+    			// if error, throw error
+				if (err) throw err;
+
+				// display message stating quantity has been updated
+				console.log('\nQuantity has been updated\n');
+
+	    		// start the process over and list actions
+	    		listActions();
+
+    		}); // end connection.query()
+		
+		});  // end prompt().then()
 
 	} // end addToInventory()
 
