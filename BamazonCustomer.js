@@ -40,7 +40,7 @@ function bamazonCust() {
 			for (i = 0; i < data_length; i++) {
 
 				// display the item ID, name of product and price
-				console.log(data[i].ItemID + ' ' + data[i].ProductName + ' $' + data[i].Price + "\n");
+				console.log('  ' + data[i].ItemID + ' "' + data[i].ProductName + '" FORMAT: ' + data[i].DepartmentName + ' - PRICE: $' + data[i].Price + ' - Qty: ' + data[i].StockQuantity + '\n');
 
 			} // end for loop
 
@@ -100,45 +100,58 @@ function bamazonCust() {
 		// pass the id and amount to the purchaseProduct function to complete the transaction
 		}]).then(function(answer) {
 
+			// call the purchaseProduct() function and pass the two user inputed values
 			purchaseProduct(answer);
 		
-		});
+		});  // end prompt().then()
 
 	} // end selectProduct()
 
 	// check the inventory and purchase the product with the itemID and amount to purchase passed as selected_item
 	function purchaseProduct(selected_item) {
 
+		// convert the selected item into an integer
 		selected_item_int = parseInt(selected_item.amount);
 		
-		// store the query into a variable to pass to connection.query()
+		// store the query string into a variable to pass to connection.query()
 		var query_select = 'SELECT * FROM Products WHERE ?';
 
 		// run the query to match the selected id to what's in the database
-        connection.query(query_select, {ItemID: selected_item.id}, function(err, data_select) {
+        connection.query(query_select, {ItemID: selected_item.id}, function(err_select, data_select) {
+
+        	// if error, throw error
+			if (err_select) throw err_select;
             
+            // check if the amount in stock is less than the selected amount
         	if (data_select[0].StockQuantity < selected_item_int) {
 
+        		// display apology and error message
         		console.log('\nSorry for the inconveniance, but you selected to purchase more than we have in stock. Please look over our products and make another selection.\n');
 
-        		// start the process over
+        		// start the process over from the selectProduct function
         		selectProduct();
 
         	} else {
 
+        		// store the query string into a variable to pass to connection.query()
         		var query_update = 'UPDATE Products SET StockQuantity = ? WHERE ItemID = ?';
+
+        		// store the updated quantity into a variable to pass to connection.query()
         		var new_quantity = data_select[0].StockQuantity - selected_item_int;
 
-        		connection.query(query_update, [new_quantity, data_select[0].ItemID], function(err, data_update) {
-        			
-        			console.log(data_update);
+        		// update the Products table with the new StockQuantity for the purchased item
+        		connection.query(query_update, [new_quantity, data_select[0].ItemID], function(err_update, data_update) {
+
+        			// if error, throw error
+					if (err_update) throw err_update;
 
         		}); // end connection.query()
 
-        		console.log('Thank you for your purchase. Total price is $' + data_select[0].Price * selected_item_int);
+        		// thank for purchase and display the total amount
+        		console.log('\nThank you for your purchase. Total price is $' + data_select[0].Price * selected_item_int + '\n');
 
-        		// start the process over
-        		selectProduct();
+        		// start the process over and display the products
+        		displayProducts();
 
         	} // enf if else
 
@@ -148,6 +161,6 @@ function bamazonCust() {
 
 	displayProducts();
 	
-}
+} // end bamazonCust()
 
 bamazonCust();
