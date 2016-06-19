@@ -32,7 +32,7 @@ function bamazonCust() {
 			if (err) throw err;
 
 			// welcome screen and display all the items available to buy
-			console.log('Welcom to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats. \n');
+			console.log('\nWelcom to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats. \n');
 
 			// loop through the list of items and display to the screen
 			var i;
@@ -43,6 +43,9 @@ function bamazonCust() {
 				console.log(data[i].ItemID + ' ' + data[i].ProductName + ' $' + data[i].Price + "\n");
 
 			} // end for loop
+
+			// call the selectProduct function here so that it's called once the products have been displayed
+			selectProduct();
 			
 		}); // end connection.query()
 
@@ -51,7 +54,33 @@ function bamazonCust() {
 	// ask user which product they would like to buy
 	function selectProduct() {
 		
+		// ask the user which product they would like to buy
+		prompt({
+			name: 'id',
+			type: 'input',
+			message: 'What is the ID of the Product you would like to buy?',
+			validate: function(value) {
 
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nAll we need is the number next to the title.\n');
+					return false;
+
+				} // end if else
+
+			}
+
+		// 	
+		}).then(function(answer) {
+			console.log(answer);
+		});
 
 	} // end selectProduct()
 
