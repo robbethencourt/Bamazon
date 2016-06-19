@@ -133,14 +133,17 @@ function bamazonCust() {
 
         	} else {
 
-        		// store the query string into a variable to pass to connection.query()
-        		var query_update = 'UPDATE Products SET StockQuantity = ? WHERE ItemID = ?';
-
         		// store the updated quantity into a variable to pass to connection.query()
         		var new_quantity = data_select[0].StockQuantity - selected_item_int;
 
+        		// store the price paid into a variable
+        		var total_price = data_select[0].Price * selected_item_int;
+
+        		// store the query string into a variable to pass to connection.query() where we are updating both the Products table with the new Stock Quantity and the Departments table with the new Total Sales
+        		var query_update = 'UPDATE Products p, Departments d SET p.StockQuantity = ?, d.TotalSales = d.TotalSales + ? WHERE p.ItemID = ? AND d.DepartmentName = ?';
+
         		// update the Products table with the new StockQuantity for the purchased item
-        		connection.query(query_update, [new_quantity, data_select[0].ItemID], function(err_update, data_update) {
+        		connection.query(query_update, [new_quantity, total_price, data_select[0].ItemID, data_select[0].DepartmentName], function(err_update, data_update) {
 
         			// if error, throw error
 					if (err_update) throw err_update;
@@ -148,7 +151,7 @@ function bamazonCust() {
         		}); // end connection.query()
 
         		// thank for purchase and display the total amount
-        		console.log('\nThank you for your purchase. Total price is $' + data_select[0].Price * selected_item_int + '\n');
+        		console.log('\nThank you for your purchase. Total price is $' + total_price + '\n');
 
         		// start the process over and display the products
         		displayProducts();
