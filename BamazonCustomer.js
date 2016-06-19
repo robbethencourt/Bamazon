@@ -55,7 +55,7 @@ function bamazonCust() {
 	function selectProduct() {
 		
 		// ask the user which product they would like to buy
-		prompt({
+		prompt([{
 			name: 'id',
 			type: 'input',
 			message: 'What is the ID of the Product you would like to buy?',
@@ -76,13 +76,42 @@ function bamazonCust() {
 				} // end if else
 
 			}
+		}, {
+			name: 'amount',
+			type: 'input',
+			message: 'How many would you like to buy?',
+			validate: function(value) {
 
-		// 	
-		}).then(function(answer) {
-			console.log(answer);
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nWe need a number for the amount.\n');
+					return false;
+
+				} // end if else
+
+			}
+		// pass the id and amount to the purchaseProduct function to complete the transaction
+		}]).then(function(answer) {
+
+			purchaseProduct(answer);
+		
 		});
 
 	} // end selectProduct()
+
+	// check the inventory and purchase the product
+	function purchaseProduct(selected_item) {
+		
+		console.log(selected_item);
+
+	} // end purchaseProduct()
 
 	displayProducts();
 	
