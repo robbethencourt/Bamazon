@@ -21,7 +21,8 @@ function bamazonCust() {
 		// if error, throw error
 		if (err) throw err;
 
-		// display all the data to the screen
+		// welcome screen and display all the items available to buy
+		console.log('Welcom to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats.');
 		console.log(data);
 	});
 	
