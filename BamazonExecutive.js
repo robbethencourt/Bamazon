@@ -22,6 +22,53 @@ function bamazonExec() {
 
 	// functions below
 
+	function listActions() {
+		
+		prompt({
+			name: 'action',
+			type: 'list',
+			message: 'What would you like to do?',
+			choices: ['View Product Sales by Department', 'Create New Department']
+		// pass the selected action to .then()
+		}).then(function(answer) {
+			
+			// switch statement to call the corresponding function
+			switch(answer.action) {
+
+				case 'View Product Sales by Department':
+
+					viewSalesByDepartment();
+					break;
+
+				case 'Create New Department':
+
+					createNewDepartment();
+					break;
+
+				default:
+
+					listActions();
+
+			} // end switch
+
+		}); // and prompt().then()
+
+	} // end listActions()
+
+	function viewSalesByDepartment() {
+		
+		console.log('view sales by department');
+
+	} // end viewSalesByDepartment()
+
+	function createNewDepartment() {
+		
+		console.log('create new department');
+
+	} // end createNewDepartment()
+
+	listActions();
+
 } // end bamazonExec()
 
 bamazonExec();
