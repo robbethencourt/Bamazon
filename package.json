@@ -1,0 +1,30 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Amazon like store in the command line",
+  "main": "BamazonCustomer.js",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "mysql": "^2.11.1",
+    "inquirer": "^1.0.3",
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robbethencourt/Bamazon.git"
+  },
+  "keywords": [
+    "javascript",
+    "node"
+  ],
+  "author": "Robert Bethencourt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robbethencourt/Bamazon/issues"
+  },
+  "homepage": "https://github.com/robbethencourt/Bamazon#readme"
+}
