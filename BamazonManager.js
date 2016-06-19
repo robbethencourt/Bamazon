@@ -67,7 +67,29 @@ function bamazonManager() {
 
 	function viewProducts() {
 			
-		console.log('view products');
+		// connection to mysql server
+		connection.query('SELECT * FROM Products', function(err, data) {
+
+			// if error, throw error
+			if (err) throw err;
+
+			// welcome screen and display all the items available to buy
+			console.log('\nItems available for sale:\n');
+
+			// loop through the list of items and display to the screen
+			var i;
+			var data_length = data.length;
+			for (i = 0; i < data_length; i++) {
+
+				// display the item ID, name of product and price
+				console.log('  ' + data[i].ItemID + ' "' + data[i].ProductName + '" FORMAT: ' + data[i].DepartmentName + ' - PRICE: $' + data[i].Price + ' - Qty: ' + data[i].StockQuantity + '\n');
+
+			} // end for loop
+
+			// call the listActions() function so the user can select another action to perform
+			listActions();
+			
+		}); // end connection.query()
 
 	} // end viewProducts()
 
