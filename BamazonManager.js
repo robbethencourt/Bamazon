@@ -199,7 +199,124 @@ function bamazonManager() {
 
 	function addNewProduct() {
 		
-		console.log('add new product');
+		// ask the user which product they would like to update
+		prompt([{
+			name: 'name',
+			type: 'input',
+			message: 'What is the name of the new product?',
+			validate: function(value) {
+
+				// check if the user entered anything
+				if (value !== '') {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nIt doesn\'t appear as if you entered anything. Try again.\n');
+					return false;
+
+				} // end if else
+
+			}
+		}, {
+			name: 'department',
+			type: 'input',
+			message: 'What department should this new product be part of?',
+			validate: function(value) {
+
+				// check if the user entered anything
+				if (value !== '') {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nIt doesn\'t appear as if you entered anything. Try again.\n');
+					return false;
+
+				} // end if else
+
+			}
+		}, {
+			name: 'price',
+			type: 'input',
+			message: 'How much does this product sell for?',
+			validate: function(value) {
+
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nWe need a number for the price.\n');
+					return false;
+
+				} // end if else
+
+			}
+		}, {
+			name: 'amount',
+			type: 'input',
+			message: 'How many do we have on hand?',
+			validate: function(value) {
+
+				// check if the user entered value is a number
+				if (isNaN(value) == false) {
+
+					// continues with the application
+					return true;
+
+				} else {
+
+					// display error message and display the question again
+					console.log('\n\nWe need a number for the stock quantity.\n');
+					return false;
+
+				} // end if else
+
+			}
+		// pass the id and amount to the purchaseProduct function to update the quantity
+		}]).then(function(answer) {
+
+			// convert the answers that require integers to integers
+			var price_int = parseFloat(answer.price);
+			var amount_int = parseInt(answer.amount);
+			
+			// store the query string into a variable to pass to connection.query()
+    		var query = 'INSERT INTO Products SET ?';
+
+    		// store the values into an object to pass to connection.query()
+    		var values = {
+    			ProductName: answer.name,
+    			DepartmentName: answer.department,
+    			Price: price_int,
+    			StockQuantity: amount_int
+    		}
+
+    		// update the Products table with the new StockQuantity for the purchased item
+    		connection.query(query, values, function(err, data) {
+
+    			// if error, throw error
+				if (err) throw err;
+
+				// display message stating quantity has been updated
+				console.log('\nProduct has been added\n');
+
+	    		// start the process over and list actions
+	    		listActions();
+
+    		}); // end connection.query()
+		
+		});  // end prompt().then()
 
 	} // end addNewProduct()
 
