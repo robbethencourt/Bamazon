@@ -223,25 +223,9 @@ function bamazonManager() {
 			}
 		}, {
 			name: 'department',
-			type: 'input',
+			type: 'list',
 			message: 'What department should this new product be part of?',
-			validate: function(value) {
-
-				// check if the user entered anything
-				if (value !== '') {
-
-					// continues with the application
-					return true;
-
-				} else {
-
-					// display error message and display the question again
-					console.log('\n\nIt doesn\'t appear as if you entered anything. Try again.\n');
-					return false;
-
-				} // end if else
-
-			}
+			choices: ['VHS', 'Laserdisc', 'Film', 'DVD', 'Beta']
 		}, {
 			name: 'price',
 			type: 'input',
