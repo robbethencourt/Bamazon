@@ -2,17 +2,8 @@ function bamazonManager() {
 	
 	// npm variable declarations
 
-	// use mysql npm
-	var mysql = require('mysql');
-
-	// set connection for mysql
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		port: 3306,
-		user: 'root',
-		password: 'hihi',
-		database: 'Bamazon'
-	});
+	// use mysql npm through the mysqlconnect.js file
+	var connect = require('./mysqlconnect.js');
 
 	// use inquirer npm
 	var inquirer = require('inquirer');
@@ -68,7 +59,7 @@ function bamazonManager() {
 	function viewProducts() {
 			
 		// connection to mysql server
-		connection.query('SELECT * FROM Products', function(err, data) {
+		connect.connection.query('SELECT * FROM Products', function(err, data) {
 
 			// if error, throw error
 			if (err) throw err;
@@ -99,7 +90,7 @@ function bamazonManager() {
 		var query = 'SELECT * FROM Products WHERE StockQuantity < 5';
 
 		// connection to mysql server
-		connection.query(query, function(err, data) {
+		connect.connection.query(query, function(err, data) {
 
 			// if error, throw error
 			if (err) throw err;
@@ -180,7 +171,7 @@ function bamazonManager() {
     		var query = 'UPDATE Products SET StockQuantity = StockQuantity + ? WHERE ItemID = ?';
 
     		// update the Products table with the new StockQuantity for the purchased item
-    		connection.query(query, [amount_int, item_int], function(err, data) {
+    		connect.connection.query(query, [amount_int, item_int], function(err, data) {
 
     			// if error, throw error
 				if (err) throw err;
@@ -287,7 +278,7 @@ function bamazonManager() {
     		}
 
     		// update the Products table with the new StockQuantity for the purchased item
-    		connection.query(query, values, function(err, data) {
+    		connect.connection.query(query, values, function(err, data) {
 
     			// if error, throw error
 				if (err) throw err;
