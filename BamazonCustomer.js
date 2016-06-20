@@ -23,7 +23,7 @@ function bamazonCust() {
 			if (err) throw err;
 
 			// welcome screen and display all the items available to buy
-			console.log('\nWelcom to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats. \n');
+			console.log('\nWelcome to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats. \n');
 
 			// loop through the list of items and display to the screen
 			var i;
@@ -66,7 +66,7 @@ function bamazonCust() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'amount',
 			type: 'input',
@@ -87,7 +87,7 @@ function bamazonCust() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		// pass the id and amount to the purchaseProduct function to complete the transaction
 		}]).then(function(answer) {
 
@@ -117,7 +117,7 @@ function bamazonCust() {
         	if (data_select[0].StockQuantity < selected_item_int) {
 
         		// display apology and error message
-        		console.log('\nSorry for the inconveniance, but you selected to purchase more than we have in stock. Please look over our products and make another selection.\n');
+        		console.log('\nSorry for the inconvenience, but you selected to purchase more than we have in stock. Please look over our products and make another selection.\n');
 
         		// start the process over from the selectProduct function
         		selectProduct();
@@ -147,7 +147,7 @@ function bamazonCust() {
         		// start the process over and display the products
         		displayProducts();
 
-        	} // enf if else
+        	} // end if else
 
         }); // end connection.query()
 

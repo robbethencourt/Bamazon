@@ -138,7 +138,7 @@ function bamazonManager() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'amount',
 			type: 'input',
@@ -159,7 +159,7 @@ function bamazonManager() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		// pass the id and amount to .then()
 		}]).then(function(answer) {
 
@@ -211,7 +211,7 @@ function bamazonManager() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'department',
 			type: 'list',
@@ -237,7 +237,7 @@ function bamazonManager() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'amount',
 			type: 'input',
@@ -258,7 +258,7 @@ function bamazonManager() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		// pass the name, department, price and amount to .then()
 		}]).then(function(answer) {
 
