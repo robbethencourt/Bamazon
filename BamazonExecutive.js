@@ -2,17 +2,8 @@ function bamazonExec() {
 	
 	// npm variable declarations
 
-	// use mysql npm
-	var mysql = require('mysql');
-
-	// set connection for mysql
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		port: 3306,
-		user: 'root',
-		password: 'hihi',
-		database: 'Bamazon'
-	});
+	// use mysql npm through the mysqlconnect.js file
+	var connect = require('./mysqlconnect.js');
 
 	// use inquirer npm
 	var inquirer = require('inquirer');
@@ -64,7 +55,7 @@ function bamazonExec() {
 		var query = 'SELECT * from Departments';
 
 		// pull up the sales data for each department
-		connection.query(query, function(err, data) {
+		connect.connection.query(query, function(err, data) {
 
 			// if error, throw error
 			if (err) throw err;
@@ -87,7 +78,7 @@ function bamazonExec() {
 			// create a new instance of cli-table
 			var table = new Table({
 
-				// declare the head (or the columns of the table) with the head array craeted above
+				// declare the head (or the columns of the table) with the head array created above
 				head: head_array
 
 			}); // end new instance of Table() named table()
@@ -103,13 +94,13 @@ function bamazonExec() {
 					// push each value from each object into the table data array
 					table_data.push(data[i][key]);
 
-				} // end for looop
+				} // end for loop
 
 				// store the profit (positive or negative) from the values in each object
 				var TotalProfit = data[i].TotalSales - data[i].OverHeadCosts;
 
-				// push that profit amount into the table data array to populate that last column
-				table_data.push(TotalProfit);
+				// push that profit amount into the table data array to populate that last column. Use the toFixed() to force it into 2 decimal places.
+				table_data.push(TotalProfit.toFixed(2));
 
 				// push all the data to the cli-table table()
 				table.push(table_data);
@@ -117,7 +108,7 @@ function bamazonExec() {
 				// reset the table data to an empty string so we add data to a new array each time we loop through a new object
 				table_data = [];
 
-			}
+			} // end for loop
 
 			// display table showing department details
 			console.log(table.toString());
@@ -152,7 +143,7 @@ function bamazonExec() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'overhead_costs',
 			type: 'input',
@@ -173,7 +164,7 @@ function bamazonExec() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'total_sales',
 			type: 'input',
@@ -194,7 +185,7 @@ function bamazonExec() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		// pass the name, overhead costs and total sales to .then()
 		}]).then(function(answer) {
 
@@ -213,7 +204,7 @@ function bamazonExec() {
     		}
 
     		// update the Departments table with the new department
-    		connection.query(query, values, function(err, data) {
+    		connect.connection.query(query, values, function(err, data) {
 
     			// if error, throw error
 				if (err) throw err;

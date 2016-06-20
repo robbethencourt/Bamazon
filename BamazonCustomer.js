@@ -2,17 +2,8 @@ function bamazonCust() {
 
 	// npm variable declarations
 
-	// use mysql npm
-	var mysql = require('mysql');
-
-	// set connection for mysql
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		port: 3306,
-		user: 'root',
-		password: 'hihi',
-		database: 'Bamazon'
-	});
+	// use mysql npm through the mysqlconnect.js file
+	var connect = require('./mysqlconnect.js');
 
 	// use inquirer npm
 	var inquirer = require('inquirer');
@@ -26,13 +17,13 @@ function bamazonCust() {
 	function displayProducts() {
 		
 		// connection to mysql server
-		connection.query('SELECT * FROM Products', function(err, data) {
+		connect.connection.query('SELECT * FROM Products', function(err, data) {
 
 			// if error, throw error
 			if (err) throw err;
 
 			// welcome screen and display all the items available to buy
-			console.log('\nWelcom to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats. \n');
+			console.log('\nWelcome to the Bamazon Cult Cinema Shop. Where you can purchase classic films in classic formats. \n');
 
 			// loop through the list of items and display to the screen
 			var i;
@@ -75,7 +66,7 @@ function bamazonCust() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		}, {
 			name: 'amount',
 			type: 'input',
@@ -96,7 +87,7 @@ function bamazonCust() {
 
 				} // end if else
 
-			}
+			} // end validate()
 		// pass the id and amount to the purchaseProduct function to complete the transaction
 		}]).then(function(answer) {
 
@@ -117,7 +108,7 @@ function bamazonCust() {
 		var query_select = 'SELECT * FROM Products WHERE ?';
 
 		// run the query to match the selected id to what's in the database
-        connection.query(query_select, {ItemID: selected_item.id}, function(err_select, data_select) {
+        connect.connection.query(query_select, {ItemID: selected_item.id}, function(err_select, data_select) {
 
         	// if error, throw error
 			if (err_select) throw err_select;
@@ -126,7 +117,7 @@ function bamazonCust() {
         	if (data_select[0].StockQuantity < selected_item_int) {
 
         		// display apology and error message
-        		console.log('\nSorry for the inconveniance, but you selected to purchase more than we have in stock. Please look over our products and make another selection.\n');
+        		console.log('\nSorry for the inconvenience, but you selected to purchase more than we have in stock. Please look over our products and make another selection.\n');
 
         		// start the process over from the selectProduct function
         		selectProduct();
@@ -143,7 +134,7 @@ function bamazonCust() {
         		var query_update = 'UPDATE Products p, Departments d SET p.StockQuantity = ?, d.TotalSales = d.TotalSales + ? WHERE p.ItemID = ? AND d.DepartmentName = ?';
 
         		// update the Products table with the new StockQuantity for the purchased item
-        		connection.query(query_update, [new_quantity, total_price, data_select[0].ItemID, data_select[0].DepartmentName], function(err_update, data_update) {
+        		connect.connection.query(query_update, [new_quantity, total_price, data_select[0].ItemID, data_select[0].DepartmentName], function(err_update, data_update) {
 
         			// if error, throw error
 					if (err_update) throw err_update;
@@ -156,7 +147,7 @@ function bamazonCust() {
         		// start the process over and display the products
         		displayProducts();
 
-        	} // enf if else
+        	} // end if else
 
         }); // end connection.query()
 
