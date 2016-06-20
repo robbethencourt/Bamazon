@@ -1,3 +1,16 @@
 # Bamazon
 command line node application that acts like an amazon storefront
 ![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-1.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-2.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-3.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-4.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-5.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-6.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-7.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-8.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-9.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-10.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-11.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-12.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-13.jpg)
+![alt tag](https://github.com/robbethencourt/Bamazon/blob/master/screen_capture_images/Bamazon-sc-14.jpg)
