@@ -43,7 +43,8 @@ function bamazonManager() {
 
 				case 'Add New Product':
 
-					addNewProduct();
+					// calling the departmentList() function so we can get the current list of departments and pass it to the prompt that asks the manager to enter the department name for the new product. Idea being that only the executive level account would grant access to creating new departments so a select would be needed from the most current list of departments
+					departmentList();
 					break;
 
 				default:
@@ -188,7 +189,40 @@ function bamazonManager() {
 
 	} // end addToInventory()
 
-	function addNewProduct() {
+	// get the most current list of departments from the Departments table
+	function departmentList() {
+
+		// empty array to store the department names into
+		var department_list = [];
+
+		// store the query string into a variable to pass to connection.query()
+		var query = 'SELECT DepartmentName FROM Departments';
+		
+		// grab the department names
+		connect.connection.query(query, function(err, data) {
+			
+			// if error, throw error
+			if (err) throw err;
+
+			// loop through each department name returned from data
+			var i;
+			var data_length = data.length;
+			for (i = 0; i < data_length; i++) {
+				
+				// push each department name into the department_list array
+				department_list.push(data[i].DepartmentName);
+
+			} // end for loop
+
+			// call addNewProduct and pass the completed department_list array
+			addNewProduct(department_list);
+
+		}); // end connect.connection.query()
+
+	} // end departmentList()
+
+	// addNewProduct() takes in the most current department list passed from addNewProduct() to use in the prompt asking the manager for the department name of the new product
+	function addNewProduct(dep_list) {
 		
 		// ask the user what product they would like to add
 		prompt([{
@@ -216,7 +250,7 @@ function bamazonManager() {
 			name: 'department',
 			type: 'list',
 			message: 'What department should this new product be part of?',
-			choices: ['VHS', 'Laserdisc', 'Film', 'DVD', 'Beta']
+			choices: dep_list // this is an array of current products
 		}, {
 			name: 'price',
 			type: 'input',
